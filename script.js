@@ -21,9 +21,10 @@ function validatePhoneNumber(phoneNumber) {
 }
 
 function validateCRMNumber(crmNumber) {
-    const crmRegex = /^\d{1,12}$/;
+    const crmRegex = /^\d{1,}$/; 
     return crmRegex.test(crmNumber);
 }
+
 
 function formatPhoneNumber(phoneNumber) {
     const cleaned = phoneNumber.replace(/\D/g, '');
