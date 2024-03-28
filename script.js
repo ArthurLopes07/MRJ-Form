@@ -5,10 +5,6 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-function validateName(name) {
-    const nameRegex = /^[a-zA-ZÀ-ú]{2,}(?:\s[a-zA-ZÀ-ú]+)+$/;
-    return nameRegex.test(name);
-}
 
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +20,6 @@ function validateCRMNumber(crmNumber) {
     const crmRegex = /^\d{1,}$/; 
     return crmRegex.test(crmNumber);
 }
-
 
 function formatPhoneNumber(phoneNumber) {
     const cleaned = phoneNumber.replace(/\D/g, '');
@@ -47,13 +42,9 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
     const nome = document.getElementById("Nome_Completo").value;
     const email = document.getElementById("Email").value;
     const telefone = document.getElementById("Telefone").value;
-    let crm = document.getElementById("CRM").value; // Permitir apenas números
+    let crm = document.getElementById("CRM").value; 
     const estado = document.getElementById("Estado").value;
 
-    if (!validateName(nome)) {
-        alert("Por favor, insira pelo menos dois nomes no campo Nome.");
-        return;
-    }
 
     if (!validateEmail(email)) {
         alert("Por favor, insira um endereço de email válido.");
@@ -70,7 +61,6 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
         return;
     }
 
-    // Remover caracteres não numéricos do CRM
     crm = crm.replace(/\D/g, '');
 
     const { data: existingCRMs, error: existingError } = await supabase
