@@ -36,13 +36,17 @@ function formatPhoneNumber(phoneNumber) {
     return phoneNumber;
 }
 
+document.getElementById("CRM").addEventListener("input", function (event) {
+    this.value = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+});
+
 document.getElementById("myForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const nome = document.getElementById("Nome_Completo").value;
     const email = document.getElementById("Email").value;
     const telefone = document.getElementById("Telefone").value;
-    const crm = document.getElementById("CRM").value;
+    let crm = document.getElementById("CRM").value; // Permitir apenas números
     const estado = document.getElementById("Estado").value;
 
     if (!validateName(nome)) {
@@ -64,6 +68,9 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
         alert("Por favor, insira um número de CRM válido (até 6 dígitos).");
         return;
     }
+
+    // Remover caracteres não numéricos do CRM
+    crm = crm.replace(/\D/g, '');
 
     const { data: existingCRMs, error: existingError } = await supabase
       .from("usuarios")
