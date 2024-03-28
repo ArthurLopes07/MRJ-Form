@@ -21,7 +21,7 @@ function validatePhoneNumber(phoneNumber) {
 }
 
 function validateCRMNumber(crmNumber) {
-    const crmRegex = /^\d{1,6}$/;
+    const crmRegex = /^\d{1,12}$/;
     return crmRegex.test(crmNumber);
 }
 
