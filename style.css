@@ -1,111 +1,106 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const supabaseUrl = "https://uolcgntsyzkkcqlfeowo.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvbGNnbnRzeXpra2NxbGZlb3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1OTE4MjksImV4cCI6MjAyNzE2NzgyOX0._DlhbNBrF4kXqu9dWqWRwqtobL7Bp_xv1WbNEiloGBg";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-function validateName(name) {
-    const nameRegex = /^[a-zA-Z]{2,}(?:\s[a-zA-Z]+)+$/;
-    return nameRegex.test(name);
+body {
+    font-family: 'Lexend', sans-serif, monospace;
+    background-image: linear-gradient(to right, rgb(20, 147, 220), rgb(17, 54, 71));
 }
 
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+.box {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    width: 20%;
 }
 
-function validatePhoneNumber(phoneNumber) {
-    const phoneRegex = /^\d{10,11}$/;
-    return phoneRegex.test(phoneNumber);
+fieldset {
+    border: 3px solid dodgerblue;
 }
 
-function validateCRMNumber(crmNumber) {
-    const crmRegex = /^\d{1,6}$/;
-    return crmRegex.test(crmNumber);
+legend {
+    border: 1px solid dodgerblue;
+    padding: 10px;
+    text-align: center;
+    background-color: dodgerblue;
+    border-radius: 8px;
 }
 
-function formatPhoneNumber(phoneNumber) {
-    const cleaned = phoneNumber.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
-
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + ' ' + match[3] + '-' + match[4];
-    }
-
-    return phoneNumber;
+.inputBox {
+    position: relative;
 }
 
-document.getElementById("CRM").addEventListener("input", function (event) {
-    this.value = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-});
+.inputUser {
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 2px;
+}
 
-document.getElementById("myForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+.labelInput {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    transition: .5s;
+}
 
-    const nome = document.getElementById("Nome_Completo").value;
-    const email = document.getElementById("Email").value;
-    const telefone = document.getElementById("Telefone").value;
-    let crm = document.getElementById("CRM").value; // Permitir apenas números
-    const estado = document.getElementById("Estado").value;
+.inputUser:focus ~ .labelInput,
+.inputUser:valid ~ .labelInput {
+    top: -20px;
+    font-size: 12px;
+    color: dodgerblue;
+}
 
-    if (!validateName(nome)) {
-        alert("Por favor, insira pelo menos dois nomes no campo Nome.");
-        return;
-    }
+select.Estado {
+    background: rgba(30, 144, 255, 0.6);
+    color: white;
+    border: 1px solid dodgerblue;
+    padding: 3px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    width: 40%;
+    margin-top: 10px;
+    font-family: Lexend;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+    display: block;
+}
 
-    if (!validateEmail(email)) {
-        alert("Por favor, insira um endereço de email válido.");
-        return;
-    }
+select.Estado::-ms-expand {
+    display: none;
+}
 
-    if (!validatePhoneNumber(telefone)) {
-        alert("Por favor, insira um número de telefone válido (de 10 a 11 dígitos).");
-        return;
-    }
+select.Estado option {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+}
 
-    if (!validateCRMNumber(crm)) {
-        alert("Por favor, insira um número de CRM válido (até 6 dígitos).");
-        return;
-    }
+select.Estado:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 5px dodgerblue;
+}
 
-    // Remover caracteres não numéricos do CRM
-    crm = crm.replace(/\D/g, '');
+#submit {
+    background-image: linear-gradient(to right,rgb(0, 92, 197), rgb(90, 20, 220));
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-family: Lexend;
+}
 
-    const { data: existingCRMs, error: existingError } = await supabase
-      .from("usuarios")
-      .select("*")
-      .eq("CRM", crm)
-      .eq("Estado", estado);
-
-    if (existingError) {
-      console.error("Erro ao verificar o CRM:", existingError.message);
-      return;
-    }
-
-    if (existingCRMs.length > 0) {
-      alert("Este CRM já está cadastrado para o estado selecionado. Por favor, insira um CRM diferente.");
-      return;
-    }
-
-    const formData = {
-      Nome_Completo: nome,
-      Email: email,
-      Telefone: telefone.replace(/\D/g, ''),
-      CRM: crm,
-      Estado: estado
-    };
-
-    console.log("Dados do Formulário:", formData);
-
-    const { data, error } = await supabase.from("usuarios").insert([formData]);
-
-    if (error) {
-        console.error("Erro ao inserir os dados:", error.message);
-    } else {
-        console.log("Dados inseridos com sucesso:", data);
-        alert("Cadastro realizado com sucesso!");
-    }
-
-    event.target.reset();
-});
+#submit:hover {
+    background-image: linear-gradient(to right,rgb(0, 80, 172), rgb(80, 19, 195));
+}
