@@ -6,7 +6,7 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function validateName(name) {
-    const nameRegex = /^[a-zA-Z]{2,}(?:\s[a-zA-Z]+)+$/;
+    const nameRegex = /^[a-zA-ZÀ-ú]{2,}(?:\s[a-zA-ZÀ-ú]+)+$/;
     return nameRegex.test(name);
 }
 
