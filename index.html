@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário MRJ FARMA</title>
+    <link rel="stylesheet" type= "text/css" href="style.css">
+</head>
+
+<body>
+    <div class="box">
+        <form id="myForm">
+            <fieldset>
+                <legend><b>Formulário MRJ Farma</b></legend>
+                <br>
+                <div class="inputBox">
+                    <input type="text" name="Nome_Completo" id="Nome_Completo" class="inputUser" required>
+                    <label for="nome" class="labelInput">Nome completo</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="Email" id="Email" class="inputUser" required>
+                    <label for="email" class="labelInput">Email</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="tel" name="Telefone" id="Telefone" class="inputUser" required>
+                    <label for="telefone" class="labelInput">Telefone com DDD</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <input type="text" name="CRM" id="CRM" class="inputUser" required>
+                    <label for="CRM" class="labelInput">CRM</label>
+                </div>
+                <br><br>
+                <div class="inputBox">
+                    <select id="Estado" class="Estado" required>
+                        <option value="" selected disabled>Estado do CRM</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+                <br><br>
+                <input type="submit" name="submit" id="submit">
+            </fieldset>
+        </form>
+    </div>
+    <script type="module" src="script.js"></script> 
+   
+</body>
+</html>
