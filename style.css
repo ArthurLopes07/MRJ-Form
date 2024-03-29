@@ -12,8 +12,8 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 15px;
     border-radius: 15px;
-    width: 80%; /* Ajuste a largura para 80% da largura da tela */
-    max-width: 400px; /* Define uma largura máxima */
+    width: 80%; 
+    max-width: 400px;
 }
 
 fieldset {
@@ -66,7 +66,7 @@ select.Estado {
     border-radius: 8px;
     outline: none;
     font-size: 14px;
-    width: 100%; /* Largura total */
+    width: 100%; 
     margin-top: 10px;
     font-family: Lexend;
     text-align: center;
@@ -103,9 +103,115 @@ select.Estado:focus {
     background-image: linear-gradient(to right,rgb(0, 80, 172), rgb(80, 19, 195));
 }
 
-/* Media query para telas menores */
 @media screen and (max-width: 600px) {
     .box {
-        width: 90%; /* Reduz a largura para 90% da largura da tela */
+        width: 90%; 
     }
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #c5f1ff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 50%;
+    text-align: center;
+    font-family: Lexend;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  #confirmYesBtn {
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-family: Lexend;
+  }
+  
+  #confirmYesBtn:hover {
+    background-color: #0056b3;
+  }
+
+  .privacy-policy-btn {
+    background-color: dodgerblue; 
+    color: white; 
+    padding: 8px 16px; 
+    border: none; 
+    border-radius: 5px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    margin-top: 20px; 
+    cursor: pointer; 
+    font-family: Lexend;
+}
+
+.privacy-policy-btn:hover {
+    background-color: #0056b3; 
+}
+    
+
