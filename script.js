@@ -52,7 +52,7 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
         .from("usuarios")
         .select("*")
         .eq("Telefone", telefone.replace(/\D/g, ''))
-        .eq("Estado", estado);
+        
 
     if (existingErrorPhone) {
         console.error("Erro ao verificar o telefone:", existingErrorPhone.message);
@@ -60,7 +60,7 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
     }
 
     if (existingPhones.length > 0) {
-        alert("Este telefone já está cadastrado para o estado selecionado. Por favor, insira um telefone diferente.");
+        alert("Este telefone já está cadastrado. Por favor, insira um telefone diferente.");
         return;
     }
 
