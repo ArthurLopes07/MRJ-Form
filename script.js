@@ -1,4 +1,4 @@
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const supabaseUrl = "https://uolcgntsyzkkcqlfeowo.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvbGNnbnRzeXpra2NxbGZlb3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1OTE4MjksImV4cCI6MjAyNzE2NzgyOX0._DlhbNBrF4kXqu9dWqWRwqtobL7Bp_xv1WbNEiloGBg";
@@ -20,18 +20,47 @@ function validateCRMNumber(crmNumber) {
     return crmRegex.test(crmNumber);
 }
 
-document.getElementById("myForm").addEventListener("submit", function (event) {
+document.getElementById("myForm").addEventListener("submit", async function (event) {
     event.preventDefault();
-    document.getElementById('modal').style.display = 'block';
-});
 
-document.getElementById("confirmYesBtn").addEventListener("click", async function () {
+    const telefone = document.getElementById("Telefone").value;
+    const estado = document.getElementById("Estado").value;
+
+    if (!validatePhoneNumber(telefone)) {
+        alert("Por favor, insira um número de telefone válido.");
+        return;
+    }
+
+    const { data: existingPhones, error: existingErrorPhone } = await supabase
+        .from("usuarios")
+        .select("*")
+        .eq("Telefone", telefone.replace(/\D/g, ''))
+        .eq("Estado", estado);
+
+    if (existingErrorPhone) {
+        console.error("Erro ao verificar o telefone:", existingErrorPhone.message);
+        return;
+    }
+
+    if (existingPhones.length > 0) {
+        alert("Este telefone já está cadastrado para o estado selecionado. Por favor, insira um telefone diferente.");
+        return;
+    }
+
     const nome = document.getElementById("Nome_Completo").value;
     const email = document.getElementById("Email").value;
-    const telefone = document.getElementById("Telefone").value;
-    let crm = document.getElementById("CRM").value; 
-    const estado = document.getElementById("Estado").value;
-  
+    let crm = document.getElementById("CRM").value;
+
+    if (!validateEmail(email)) {
+        alert("Por favor, insira um endereço de email válido.");
+        return;
+    }
+
+    if (!validateCRMNumber(crm)) {
+        alert("Por favor, insira um número de CRM válido.");
+        return;
+    }
+
     const formData = {
         Nome_Completo: nome,
         Email: email,
@@ -40,14 +69,14 @@ document.getElementById("confirmYesBtn").addEventListener("click", async functio
         Estado: estado
     };
 
-    const { data: existingCRMs, error: existingError } = await supabase
+    const { data: existingCRMs, error: existingErrorCRM } = await supabase
         .from("usuarios")
         .select("*")
         .eq("CRM", formData.CRM)
         .eq("Estado", estado);
 
-    if (existingError) {
-        console.error("Erro ao verificar o CRM:", existingError.message);
+    if (existingErrorCRM) {
+        console.error("Erro ao verificar o CRM:", existingErrorCRM.message);
         return;
     }
 
@@ -67,18 +96,17 @@ document.getElementById("confirmYesBtn").addEventListener("click", async functio
     }
 
     document.getElementById("myForm").reset();
-    document.getElementById('modal').style.display = 'none'; 
-});
-
-document.getElementById("CRM").addEventListener("input", function (event) {
-    this.value = this.value.replace(/\D/g, ''); 
-
-const closeButton = document.querySelector(".close");
-
-closeButton.addEventListener("click", function() {
-    // Esconde o modal
     document.getElementById('modal').style.display = 'none';
 });
 
-    
+document.getElementById("CRM").addEventListener("input", function (event) {
+    this.value = this.value.replace(/\D/g, '');
+});
+
+document.getElementById("Telefone").addEventListener("input", function (event) {
+    this.value = this.value.replace(/\D/g, '');
+});
+
+document.querySelector(".close").addEventListener("click", function() {
+    document.getElementById('modal').style.display = 'none';
 });
