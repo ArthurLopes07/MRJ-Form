@@ -29,6 +29,10 @@ function validateModal() {
     return true;
 }
 
+function displayModal() {
+    document.getElementById('modal').style.display = 'block';
+}
+
 document.getElementById("myForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -74,31 +78,7 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
         return;
     }
 
-    const formData = {
-        Nome_Completo: nome,
-        Email: email,
-        Telefone: telefone.replace(/\D/g, ''),
-        CRM: crm.replace(/\D/g, ''),
-        Estado: estado
-    };
-
-    const { data: existingCRMs, error: existingErrorCRM } = await supabase
-        .from("usuarios")
-        .select("*")
-        .eq("CRM", formData.CRM)
-        .eq("Estado", estado);
-
-    if (existingErrorCRM) {
-        console.error("Erro ao verificar o CRM:", existingErrorCRM.message);
-        return;
-    }
-
-    if (existingCRMs.length > 0) {
-        alert("Este CRM já está cadastrado para o estado selecionado. Por favor, insira um CRM diferente.");
-        return;
-    }
-
-    document.getElementById('modal').style.display = 'block';
+    displayModal();
 });
 
 document.getElementById("confirmYesBtn").addEventListener("click", async function () {
