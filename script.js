@@ -20,8 +20,21 @@ function validateCRMNumber(crmNumber) {
     return crmRegex.test(crmNumber);
 }
 
+function validateModal() {
+    const estado = document.getElementById("Estado").value;
+    if (!estado) {
+        alert("Por favor, selecione o estado antes de enviar o formulário.");
+        return false;
+    }
+    return true;
+}
+
 document.getElementById("myForm").addEventListener("submit", async function (event) {
     event.preventDefault();
+
+    if (!validateModal()) {
+        return;
+    }
 
     const telefone = document.getElementById("Telefone").value;
     const estado = document.getElementById("Estado").value;
@@ -85,6 +98,40 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
         return;
     }
 
+    document.getElementById('modal').style.display = 'block';
+});
+
+document.getElementById("confirmYesBtn").addEventListener("click", async function () {
+    const nome = document.getElementById("Nome_Completo").value;
+    const email = document.getElementById("Email").value;
+    const telefone = document.getElementById("Telefone").value;
+    let crm = document.getElementById("CRM").value; 
+    const estado = document.getElementById("Estado").value;
+  
+    const formData = {
+        Nome_Completo: nome,
+        Email: email,
+        Telefone: telefone.replace(/\D/g, ''),
+        CRM: crm.replace(/\D/g, ''),
+        Estado: estado
+    };
+
+    const { data: existingCRMs, error: existingError } = await supabase
+        .from("usuarios")
+        .select("*")
+        .eq("CRM", formData.CRM)
+        .eq("Estado", estado);
+
+    if (existingError) {
+        console.error("Erro ao verificar o CRM:", existingError.message);
+        return;
+    }
+
+    if (existingCRMs.length > 0) {
+        alert("Este CRM já está cadastrado para o estado selecionado. Por favor, insira um CRM diferente.");
+        return;
+    }
+
     const { data, error } = await supabase.from("usuarios").insert([formData]);
 
     if (error) {
@@ -96,15 +143,11 @@ document.getElementById("myForm").addEventListener("submit", async function (eve
     }
 
     document.getElementById("myForm").reset();
-    document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal').style.display = 'none'; 
 });
 
 document.getElementById("CRM").addEventListener("input", function (event) {
-    this.value = this.value.replace(/\D/g, '');
-});
-
-document.getElementById("Telefone").addEventListener("input", function (event) {
-    this.value = this.value.replace(/\D/g, '');
+    this.value = this.value.replace(/\D/g, ''); 
 });
 
 document.querySelector(".close").addEventListener("click", function() {
