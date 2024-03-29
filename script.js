@@ -72,4 +72,13 @@ document.getElementById("confirmYesBtn").addEventListener("click", async functio
 
 document.getElementById("CRM").addEventListener("input", function (event) {
     this.value = this.value.replace(/\D/g, ''); 
+
+const closeButton = document.querySelector(".close");
+
+closeButton.addEventListener("click", function() {
+    // Esconde o modal
+    document.getElementById('modal').style.display = 'none';
+});
+
+    
 });
